@@ -1,0 +1,23 @@
+{
+  "name": "foundations-challenge-1",
+  "version": "1.0.0",
+  "description": "## Setup",
+  "main": "index.js",
+  "scripts": {
+    "test": "testem",
+    "grade": "xvfb-run testem ci"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FullstackAcademy/foundtions-checkpoint-1-V2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FullstackAcademy/foundtions-checkpoint-1-V2/issues"
+  },
+  "homepage": "https://github.com/FullstackAcademy/foundtions-checkpoint-1-V2#readme",
+  "dependencies": {
+    "testem": "^2.9.0"
+  }
+}
