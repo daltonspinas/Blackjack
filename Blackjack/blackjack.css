@@ -1,0 +1,12 @@
+body {
+    background-image: url("Doc/felt-bg.jpg");
+}
+.golden {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight:bold;
+        -webkit-margin-before: 0.3em; 
+        -webkit-margin-after: 0.2em;
+        background-image: -webkit-linear-gradient(#FFF65C, #3A2C00);
+        text-shadow: -1px -1px 1px rgba(255, 223, 0, 0.60);
+  }

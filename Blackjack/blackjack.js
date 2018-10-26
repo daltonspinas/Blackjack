@@ -14,6 +14,7 @@ let dealerScore = 0;
 let dealerAltScore = 0;
 let dealerFinal = false;
 let dealerCount = 0;
+let dealerReveal = false;
 let player = [];
 let playerHand = [];
 let playerScore = 0;
@@ -67,6 +68,7 @@ function reset() {
     dealerAltScore = 0;
     dealerFinal = false;
     dealerCount = 0;
+    dealerReveal = false;
     player = [];
     playerHand = [];
     playerScore = 0;
@@ -95,14 +97,26 @@ function addDealButton() {
     document.getElementById("dealButton").addEventListener("click", deal);
     document.getElementById("dealButton").innerHTML = "Deal";
 }
+function reveal(){
+    if(dealerReveal === true){
+        document.getElementById("dealerCardBack").src = dealer[0].image;
+    }
+}
 function addDealerImage(){
     while(dealerCount < dealer.length){
     let dealerImages = document.createElement("img");
-    dealerImages.setAttribute("src",`${dealer[dealerCount].image}`);
+    if(dealerCount === 0){
+    dealerImages.setAttribute("src","Doc/back-red.png");
+    dealerImages.setAttribute("id","dealerCardBack");
+    }
+    else{
+        dealerImages.setAttribute("src",`${dealer[dealerCount].image}`);
+    }
     dealerImages.setAttribute("height","100px");
     document.getElementById("d-images").appendChild(dealerImages);
     dealerCount++;
     }
+    reveal();
 }
 function addPlayerImage(){
     while(playerCount < player.length){
@@ -158,6 +172,9 @@ function settlePlayer() {
 }
 
 function dealerFinish() {
+    dealerReveal = true;
+    addDealerImage();
+    calculate();
     settlePlayer();
     while (dealerAltScore > 0 && dealerAltScore <= 17) {
         addDealer();
