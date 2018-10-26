@@ -1,13 +1,10 @@
-// Need to add ace logic for dealer 
-// something going on with the dealerFinish function ... possibly in connection with the addDealer function
-// not hitting on a soft 17, and not hitting more than once even if dealerScore < 17
 // need to add hide/reveal logic for dealer
 // need to add a fuckload of css
 // need to add card images
 
 
 
-let suits = ["Hearts", "Diamonds", "Clubs", "Spades"];
+let suits = ["Clubs", "Diamonds", "Hearts", "Spades"];
 let cards = ["Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"];
 let values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1];
 let deck = [];
@@ -16,11 +13,13 @@ let dealerHand = [];
 let dealerScore = 0;
 let dealerAltScore = 0;
 let dealerFinal = false;
+let dealerCount = 0;
 let player = [];
 let playerHand = [];
 let playerScore = 0;
 let playerAltScore = 0;
 let playerFinal = false;
+let playerCount = 0;
 let gamesPlayed = 0;
 let gamesWon = 0;
 let gamesPushed = 0;
@@ -67,16 +66,26 @@ function reset() {
     dealerScore = 0;
     dealerAltScore = 0;
     dealerFinal = false;
+    dealerCount = 0;
     player = [];
     playerHand = [];
     playerScore = 0;
     playerAltScore = 0;
     playerFinal = false;
+    playerCount = 0;
     document.getElementById("d-score").innerHTML = `Dealer Score: ${dealerScore}`;
     document.getElementById("p-score").innerHTML = `Player Score: ${playerScore}`;
     document.getElementById("d-hand").innerHTML = `Dealer Hand: ${dealerHand}`;
     document.getElementById("p-hand").innerHTML = `Player Hand: ${playerHand}`;
     addDealButton();
+    var dealerImageNode = document.getElementById("d-images");
+while (dealerImageNode.firstChild) {
+    dealerImageNode.removeChild(dealerImageNode.firstChild);
+}
+var playerImageNode = document.getElementById("p-images");
+while (playerImageNode.firstChild) {
+    playerImageNode.removeChild(playerImageNode.firstChild);
+}
 }
 
 function addDealButton() {
@@ -85,6 +94,24 @@ function addDealButton() {
     document.getElementById("dealDiv").appendChild(dealButton);
     document.getElementById("dealButton").addEventListener("click", deal);
     document.getElementById("dealButton").innerHTML = "Deal";
+}
+function addDealerImage(){
+    while(dealerCount < dealer.length){
+    let dealerImages = document.createElement("img");
+    dealerImages.setAttribute("src",`${dealer[dealerCount].image}`);
+    dealerImages.setAttribute("height","100px");
+    document.getElementById("d-images").appendChild(dealerImages);
+    dealerCount++;
+    }
+}
+function addPlayerImage(){
+    while(playerCount < player.length){
+    let playerImages = document.createElement("img");
+    playerImages.setAttribute("src",`${player[playerCount].image}`);
+    playerImages.setAttribute("height","100px");
+    document.getElementById("p-images").appendChild(playerImages);
+    playerCount++;
+    }
 }
 
 function deal() {
@@ -208,13 +235,15 @@ function calculate() {
     else {
         document.getElementById("p-score").innerHTML = `Player Score: ${playerScore}`;
     }
-
+    addDealerImage();
+    addPlayerImage();
     document.getElementById("d-hand").innerHTML = `Dealer Hand: ${dealerHand}`;
     document.getElementById("p-hand").innerHTML = `Player Hand: ${playerHand}`;
 }
 function createDeck() {
     let suitCount = 0;
     let cardValCount = 0;
+    let faceArr = ["Jack","Queen","King","Ace"];
     for (let i = 0; i < 52; i++) {
         if (suitCount === 4) {
             suitCount = 0;
@@ -227,6 +256,12 @@ function createDeck() {
         deck[i].value = values[cardValCount];
         suitCount++;
         cardValCount++;
+        if(!faceArr.includes(deck[i].card)){
+            deck[i].image = `Doc/${deck[i].value}${deck[i].suit[0]}.png`
+        }
+        else{
+            deck[i].image = `Doc/${deck[i].card[0]}${deck[i].suit[0]}.png`
+        }
     }
     let j = 0
     let temp = null
@@ -237,7 +272,7 @@ function createDeck() {
         deck[j] = temp
     }
 }
-
+console.log(deck);
 console.log(player, playerScore);
 console.log(dealer, dealerScore);
 
